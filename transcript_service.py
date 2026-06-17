@@ -19,3 +19,23 @@ def get_transcript(video_id):
     except Exception as e:
         print(f"Transcript Error: {e}")
         return None
+
+def get_transcript_chunks(video_id):
+    """
+    Fetches the transcript and returns a list of chunk dictionaries
+    with 'text', 'start', and 'duration' keys.
+    """
+    try:
+        yt_api_instance = YouTubeTranscriptApi()
+        transcript_list = yt_api_instance.fetch(video_id)
+        return [
+            {
+                "text": chunk.text,
+                "start": chunk.start,
+                "duration": chunk.duration
+            }
+            for chunk in transcript_list
+        ]
+    except Exception as e:
+        print(f"Transcript Chunks Error: {e}")
+        return None
